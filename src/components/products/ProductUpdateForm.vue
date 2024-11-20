@@ -97,7 +97,7 @@ const categories = ref([
 ]);
 
 const goToBack = () => {
-  router.back();
+  router.push("/products");
 };
 
 onMounted(async () => {
@@ -112,7 +112,7 @@ const updateData = async () => {
   try {
     await store.updateProduct(productId, formData);
     console.log("Product added.");
-    router.back();
+    router.push("/products");
   } catch (error) {
     console.error("Failed to add product:", error);
   }
