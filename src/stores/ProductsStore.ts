@@ -1,17 +1,8 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import TutorialDataService from "@/helpers/products.model";
+import type { Product } from "@/helpers/products.model";
 
-interface Product {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  quantity: number;
-  category: string;
-  image: string;
-  deactivated_at: string | null;
-}
 
 
 export const useProductsListStore = defineStore("productsStore", () => {

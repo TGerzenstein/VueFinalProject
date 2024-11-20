@@ -10,34 +10,40 @@
             <v-text-field
               label="Name"
               v-model="formData.name"
+              :rules="inputRules('name')"
               required
             ></v-text-field>
             <v-text-field
               label="Price"
               v-model="formData.price"
               type="number"
+              :rules="inputRules('price')"
               required
             ></v-text-field>
             <v-text-field
               label="Quantity"
               v-model="formData.quantity"
               type="number"
+              :rules="inputRules('quantity')"
               required
             ></v-text-field>
             <v-textarea
               label="Description"
               v-model="formData.description"
+              :rules="inputRules('description')"
               required
             ></v-textarea>
             <v-text-field
               label="Image URL"
               v-model="formData.image"
+              :rules="inputRules('image')"
               required
             ></v-text-field>
             <v-select
               label="Category"
               :items="categories"
               v-model="formData.category"
+              :rules="inputRules('category')"
               required
             ></v-select>
             <v-btn
@@ -52,7 +58,7 @@
               class="mx-auto mt-2 py-6 text-white"
               color="#3949ab"
               min-width="230"
-              type="submit"
+              type="button"
               @click="goToProductsList"
               block
             >
@@ -95,11 +101,6 @@ const categories = ref([
 ]);
 
 //button
-const goToBack = () => {
-  router.back();
-};
-
-//button
 const goToProductsList = () => {
   router.push("/products");
 };
@@ -112,6 +113,36 @@ const saveData = async () => {
     console.error("Failed to add product:", error);
   }
 };
+
+//validation form;
+
+function inputRules(field: string) {
+  const rules = {
+    name: [
+      (v) => !!v || "Name is required",
+      (v) => (v && v.length >= 3) || "Minimum 3 characters",
+    ],
+    price: [
+      (v) => !!v || "Price is required",
+      (v) => v > 0 || "Price must be greater than 0",
+    ],
+    quantity: [
+      (v) => !!v || "Quantity is required",
+      (v) => v > 0 || "Quantity must be greater than 0",
+    ],
+    description: [
+      (v) => !!v || "Description is required",
+      (v) =>
+        (v && v.length >= 10) || "Description must be at least 10 characters",
+    ],
+    image: [
+      (v) => !!v || "Image URL is required",
+      (v) => !!v || "This field is required",
+    ],
+    category: [(v) => !!v || "Category is required"],
+  };
+  return rules[field] || [];
+}
 </script>
 
 <style scoped>
